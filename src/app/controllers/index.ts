@@ -1,4 +1,5 @@
 import axios from 'axios'
+import brain from 'brain.js'
 import { Request, Response } from 'express'
 
 const apiUrl = 'https://ux-arch-strapi.herokuapp.com'
@@ -7,6 +8,8 @@ export const predict = async (req: Request, res: Response) => {
     const { architect_id } = req.params
 
     const {
+        value1,
+        value2,
         height,
         size,
         elements,
@@ -42,8 +45,18 @@ export const predict = async (req: Request, res: Response) => {
         const formatedTrainningData =
             formatTrainningData(rawProjectsData)
 
+        const net = new brain.NeuralNetwork({ hiddenLayers: [3] })
+        net.train([
+            { input: [0, 0], output: [0] },
+            { input: [0, 1], output: [1] },
+            { input: [1, 0], output: [1] },
+            { input: [1, 1], output: [0] }
+        ])
+        const result = net.run([value1, value2])
+
         return res.status(200).json({
-            formatedTrainningData
+            // formatedTrainningData,
+            result
         })
     } catch (e) {
         return res.status(400).json({ message: e.message })
