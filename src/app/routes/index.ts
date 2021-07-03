@@ -7,4 +7,4 @@ routes.get('/', (req, res) =>
     res.status(200).json({ message: 'olá, mundo' })
 )
 
-routes.get('/predict/:architect_id', predict)
+routes.post('/predict/:architect_id', predict)
