@@ -6,6 +6,30 @@ const apiUrl = 'https://ux-arch-strapi.herokuapp.com'
 export const predict = async (req: Request, res: Response) => {
     const { architect_id } = req.params
 
+    const {
+        height,
+        size,
+        elements,
+        shape,
+        materials,
+        texture,
+        tone,
+        primary_color,
+        secondary_color,
+        tertiary_color,
+        opennings,
+        light,
+        contrast,
+        opacity,
+        movement,
+        people,
+        context,
+        landmark,
+        context_interest,
+        time,
+        weather
+    } = req.body
+
     try {
         const { data: rawProjectsData, status } = await axios.get(
             `${apiUrl}/projects?architect=${architect_id}&project_type=reference`
