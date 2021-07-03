@@ -46,17 +46,38 @@ export const predict = async (req: Request, res: Response) => {
             formatTrainningData(rawProjectsData)
 
         const net = new brain.NeuralNetwork({ hiddenLayers: [3] })
-        net.train([
-            { input: [0, 0], output: [0] },
-            { input: [0, 1], output: [1] },
-            { input: [1, 0], output: [1] },
-            { input: [1, 1], output: [0] }
+
+        net.train(formatedTrainningData)
+
+        const result = net.run([
+            height,
+            size,
+            elements,
+            shape,
+            materials,
+            texture,
+            tone,
+            primary_color,
+            secondary_color,
+            tertiary_color,
+            opennings,
+            light,
+            contrast,
+            opacity,
+            movement,
+            people,
+            context,
+            landmark,
+            context_interest,
+            time,
+            weather
         ])
-        const result = net.run([value1, value2])
+
+        const predictedXp = result as any[]
 
         return res.status(200).json({
             // formatedTrainningData,
-            result
+            predictedXp: predictedXp[0]
         })
     } catch (e) {
         return res.status(400).json({ message: e.message })
