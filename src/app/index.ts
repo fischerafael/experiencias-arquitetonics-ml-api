@@ -1,10 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import { connectToMongoDB } from './database'
 import { routes } from './routes'
-
-connectToMongoDB()
 
 export const app = express()
 
